@@ -20,6 +20,15 @@ module.exports = function (grunt) {
     });
   };
 
+  var getJadeDistFiles = function() {
+    return grunt.file.expandMapping(['**.jade'], 'build/js/views', {
+      cwd: 'src/jade',
+      rename: function (destBase, destPath) {
+        return path.join(destBase, destPath.replace(/\.jade$/, '.js'));
+      }
+    });
+  }
+
   grunt.initConfig({
     connect: {
       server: {
@@ -46,6 +55,14 @@ module.exports = function (grunt) {
       }
     },
     jade: {
+      dist: {
+        options: {
+          client: true,
+          amd: true,
+          namespace: false
+        },
+        files: getJadeDistFiles()
+      },
       visual: {
         options: {
           data: {}
@@ -62,7 +79,7 @@ module.exports = function (grunt) {
 
 
   grunt.registerTask('visual', ['jade:visual', 'compass:visual']);
-  grunt.registerTask('dist', ['compass:dist']);
+  grunt.registerTask('dist', ['compass:dist', 'jade:dist']);
 
   grunt.registerTask('default', ['dist', 'visual']);
 
