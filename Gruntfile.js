@@ -4,7 +4,9 @@ module.exports = function (grunt) {
 
   var PATH = {
     BUILD: {
-      VISUAL: 'build/tests/visual'
+      VISUAL: 'build/tests/visual',
+      REQUIREJS_APP: 'build/js/shoropleth.js',
+      VIEWS: 'build/js/views'
     },
     SRC: {
       VISUAL: 'tests/visual'
@@ -21,7 +23,7 @@ module.exports = function (grunt) {
   };
 
   var getJadeDistFiles = function() {
-    return grunt.file.expandMapping(['**.jade'], 'build/js/views', {
+    return grunt.file.expandMapping(['**.jade'], PATH.BUILD.VIEWS, {
       cwd: 'src/jade',
       rename: function (destBase, destPath) {
         return path.join(destBase, destPath.replace(/\.jade$/, '.js'));
@@ -69,17 +71,35 @@ module.exports = function (grunt) {
         },
         files: getJadeVisualFiles()
       }
+    },
+    requirejs: {
+      dist: {
+        options: {
+          baseUrl: "src/js/modules",
+          //generateSourceMaps: true,
+          //preserveLicenseComments: false,
+          optimize: "none",
+          name: "app",
+          out: PATH.BUILD.REQUIREJS_APP,
+          //mainConfigFile: PATHS.REQUIREJS_CONFIG,
+          useStrict: true,
+          paths: {
+            "views":  PATH.BUILD.VIEWS
+          }
+        }
+      }
     }
   });
 
   grunt.loadNpmTasks('grunt-contrib-connect');
   grunt.loadNpmTasks('grunt-contrib-compass');
   grunt.loadNpmTasks('grunt-contrib-jade');
+  grunt.loadNpmTasks('grunt-contrib-requirejs');
   grunt.loadNpmTasks('grunt-contrib-watch');
 
 
   grunt.registerTask('visual', ['jade:visual', 'compass:visual']);
-  grunt.registerTask('dist', ['compass:dist', 'jade:dist']);
+  grunt.registerTask('dist', ['compass:dist', 'jade:dist', 'requirejs:dist']);
 
   grunt.registerTask('default', ['dist', 'visual']);
 
