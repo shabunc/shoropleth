@@ -1,0 +1,15 @@
+{
+  "name": "shoropleth",
+  "version": "0.0.0",
+  "description": "An easy way to create choropleth maps",
+  "main": "Gruntfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "BSD-2-Clause",
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-contrib-compass": "~0.6.0"
+  }
+}
