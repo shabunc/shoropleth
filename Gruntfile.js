@@ -1,11 +1,20 @@
-module.exports = function(grunt) {
+module.exports = function (grunt) {
 
   path = require("path");
 
-  var getJadeVisualFiles = function() {
-    return grunt.file.expandMapping(['index.jade'], 'build/tests/visual', {
+  var PATH = {
+    BUILD: {
+      VISUAL: 'build/tests/visual'
+    },
+    SRC: {
+      VISUAL: 'tests/visual'
+    }
+  }
+
+  var getJadeVisualFiles = function () {
+    return grunt.file.expandMapping(['index.jade'], PATH.BUILD.VISUAL, {
       cwd: 'tests/visual/jade',
-      rename: function(destBase, destPath) {
+      rename: function (destBase, destPath) {
         return path.join(destBase, destPath.replace(/\.jade$/, '.html'));
       }
     });
@@ -16,23 +25,30 @@ module.exports = function(grunt) {
       server: {
         options: {
           port: 9001,
-          base: 'build/tests/visual',
+          base: PATH.BUILD.VISUAL,
           keepalive: true
         }
       }
     },
     compass: {
-        dist: {
-            options: {
-                sassDir: 'src/scss',
-                cssDir: 'build/css'
-                }
-            }
+      dist: {
+        options: {
+          sassDir: 'src/scss',
+          cssDir: 'build/css'
+        }
+      },
+      visual: {
+        options: {
+          sassDir: path.join(PATH.SRC.VISUAL, 'scss'),
+          cssDir: path.join(PATH.BUILD.VISUAL, 'css'),
+          importPath: 'src/scss'
+        }
+      }
     },
     jade: {
       visual: {
         options: {
-          data:{}
+          data: {}
         },
         files: getJadeVisualFiles()
       }
@@ -45,8 +61,9 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-watch');
 
 
-  grunt.registerTask('visual', ['jade:visual']);
+  grunt.registerTask('visual', ['jade:visual', 'compass:visual']);
+  grunt.registerTask('dist', ['compass:dist']);
 
-  grunt.registerTask('default', ['compass:dist', 'visual']);
+  grunt.registerTask('default', ['dist', 'visual']);
 
 }
