@@ -12,7 +12,8 @@ module.exports = function (grunt) {
     SRC: {
       VISUAL: 'tests/visual',
       VIEWS_APP: 'tests/visual/js/modules',
-      VIEWS_APP_CONFIG: 'tests/visual/config/rjs.config.js'
+      VISUAL_APP_CONFIG: 'tests/visual/config/rjs.config.js',
+      DIST_APP_CONFIG: 'src/config/rjs.config.js'
     }
   }
 
@@ -106,7 +107,8 @@ module.exports = function (grunt) {
           useStrict: true,
           paths: {
             "views":  PATH.BUILD.VIEWS
-          }
+          },
+          mainConfigFile: PATH.SRC.DIST_APP_CONFIG
         }
       },
       visual: {
@@ -117,7 +119,7 @@ module.exports = function (grunt) {
           optimize: "none",
           name: "app",
           out: PATH.BUILD.VIEWS_APP,
-          mainConfigFile: PATH.SRC.VIEWS_APP_CONFIG,
+          mainConfigFile: PATH.SRC.VISUAL_APP_CONFIG,
           useStrict: true
         }
       }
