@@ -5,11 +5,13 @@ module.exports = function (grunt) {
   var PATH = {
     BUILD: {
       VISUAL: 'build/tests/visual',
-      REQUIREJS_APP: 'build/js/shoropleth.js',
-      VIEWS: 'build/js/views'
+      APP: 'build/js/shoropleth.js',
+      VIEWS: 'build/js/views',
+      VIEWS_APP: 'build/tests/visual/js/app.js'
     },
     SRC: {
-      VISUAL: 'tests/visual'
+      VISUAL: 'tests/visual',
+      VIEWS_APP: 'tests/visual/js/modules'
     }
   }
 
@@ -56,6 +58,24 @@ module.exports = function (grunt) {
         }
       }
     },
+    copy: {
+      visual: {
+        files: [
+          {
+            expand: true,
+            cwd: path.join(PATH.SRC.VISUAL, "js", "config"),
+            src: ["**"],
+            dest: path.join(PATH.BUILD.VISUAL, "js", "config")
+          },
+          {
+            expand: true,
+            cwd: path.join(PATH.SRC.VISUAL, "js", "third-party"),
+            src: ["**"],
+            dest: path.join(PATH.BUILD.VISUAL, "js", "third-party")
+          }
+        ]
+      }
+    },
     jade: {
       dist: {
         options: {
@@ -80,12 +100,24 @@ module.exports = function (grunt) {
           //preserveLicenseComments: false,
           optimize: "none",
           name: "app",
-          out: PATH.BUILD.REQUIREJS_APP,
+          out: PATH.BUILD.APP,
           //mainConfigFile: PATHS.REQUIREJS_CONFIG,
           useStrict: true,
           paths: {
             "views":  PATH.BUILD.VIEWS
           }
+        }
+      },
+      visual: {
+        options: {
+          baseUrl: PATH.SRC.VIEWS_APP,
+          //generateSourceMaps: true,
+          //preserveLicenseComments: false,
+          optimize: "none",
+          name: "app",
+          out: PATH.BUILD.VIEWS_APP,
+          //mainConfigFile: PATHS.REQUIREJS_CONFIG,
+          useStrict: true
         }
       }
     }
@@ -93,12 +125,13 @@ module.exports = function (grunt) {
 
   grunt.loadNpmTasks('grunt-contrib-connect');
   grunt.loadNpmTasks('grunt-contrib-compass');
+  grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-jade');
   grunt.loadNpmTasks('grunt-contrib-requirejs');
   grunt.loadNpmTasks('grunt-contrib-watch');
 
 
-  grunt.registerTask('visual', ['jade:visual', 'compass:visual']);
+  grunt.registerTask('visual', ['copy:visual', 'jade:visual', 'compass:visual', 'requirejs:visual']);
   grunt.registerTask('dist', ['compass:dist', 'jade:dist', 'requirejs:dist']);
 
   grunt.registerTask('default', ['dist', 'visual']);
