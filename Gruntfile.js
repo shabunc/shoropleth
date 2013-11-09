@@ -11,7 +11,8 @@ module.exports = function (grunt) {
     },
     SRC: {
       VISUAL: 'tests/visual',
-      VIEWS_APP: 'tests/visual/js/modules'
+      VIEWS_APP: 'tests/visual/js/modules',
+      VIEWS_APP_CONFIG: 'tests/visual/config/rjs.config.js'
     }
   }
 
@@ -99,7 +100,7 @@ module.exports = function (grunt) {
           //generateSourceMaps: true,
           //preserveLicenseComments: false,
           optimize: "none",
-          name: "app",
+          name: "shoropleth",
           out: PATH.BUILD.APP,
           //mainConfigFile: PATHS.REQUIREJS_CONFIG,
           useStrict: true,
@@ -116,7 +117,7 @@ module.exports = function (grunt) {
           optimize: "none",
           name: "app",
           out: PATH.BUILD.VIEWS_APP,
-          //mainConfigFile: PATHS.REQUIREJS_CONFIG,
+          mainConfigFile: PATH.SRC.VIEWS_APP_CONFIG,
           useStrict: true
         }
       }
@@ -130,9 +131,8 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-requirejs');
   grunt.loadNpmTasks('grunt-contrib-watch');
 
-
-  grunt.registerTask('visual', ['copy:visual', 'jade:visual', 'compass:visual', 'requirejs:visual']);
   grunt.registerTask('dist', ['compass:dist', 'jade:dist', 'requirejs:dist']);
+  grunt.registerTask('visual', ['copy:visual', 'jade:visual', 'compass:visual', 'requirejs:visual']);
 
   grunt.registerTask('default', ['dist', 'visual']);
 

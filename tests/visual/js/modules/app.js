@@ -1,5 +1,7 @@
-define(function() {
+define([
+  'shoropleth'
+], function(shoropleth) {
 
-  console.log("SHA LA LA");
+  console.log("SHOROPLETH", shoropleth);
 
 })

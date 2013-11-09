@@ -1,7 +1,7 @@
 
 define(function() {
 
-  var data = {};
+  var data = {shoropleth: true};
 
   return data;
 
