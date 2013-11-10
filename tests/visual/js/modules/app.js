@@ -16,6 +16,15 @@ define([
     scale: 720
   }
 
+  var CIS = {
+    width: 900,
+    height: 470,
+    rotate: [-105, 0],
+    center: [-13, 62],
+    parallels: [52, 64],
+    scale: 680
+  }
+
   var USA = {
     //Coordinates: 38°3′56″N 97°55′25″W
     //scale 1000, translate [480, 250], rotation [96°, 0°], center ⟨-0.6°, 38.7°⟩ and parallels [29.5°, 45.5°],
@@ -55,6 +64,6 @@ define([
   }
 
 
-  drawMap('data/rus-regions.json', RUS);
+  drawMap('data/cis.json', CIS);
   window.Shoropleth = Shoropleth;
 });
