@@ -1,7 +1,13 @@
 define([
   'shoropleth'
-], function(shoropleth) {
+], function(Shoropleth) {
 
-  console.log("SHOROPLETH", shoropleth);
+  var sh = new Shoropleth().init({
+    width: 960,
+    height: 1160
+  });
 
-})
+  sh.load('data/uk.json');
+
+
+});

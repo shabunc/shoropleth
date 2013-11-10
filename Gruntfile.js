@@ -61,6 +61,16 @@ module.exports = function (grunt) {
       }
     },
     copy: {
+      data: {
+        files: [
+          {
+            expand: true,
+            cwd: 'data/topo',
+            src: ['**'],
+            dest: path.join(PATH.BUILD.VISUAL, 'data')
+          }
+        ]
+      },
       visual: {
         files: [
           {
@@ -133,7 +143,7 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-requirejs');
   grunt.loadNpmTasks('grunt-contrib-watch');
 
-  grunt.registerTask('dist', ['compass:dist', 'jade:dist', 'requirejs:dist']);
+  grunt.registerTask('dist', ['copy:data', 'compass:dist', 'jade:dist', 'requirejs:dist']);
   grunt.registerTask('visual', ['copy:visual', 'jade:visual', 'compass:visual', 'requirejs:visual']);
 
   grunt.registerTask('default', ['dist', 'visual']);
