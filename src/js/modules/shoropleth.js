@@ -18,6 +18,10 @@ define([
       this.getProjection = this.params.getProjection;
     }
 
+    if (typeof this.params.resolvePolygonCSS === "function") {
+      this.resolvePolygonCSS = this.params.resolvePolygonCSS;
+    }
+
     if (typeof this.params.center != "undefined") {
       this.setCenter(this.params.center);
     }
@@ -43,6 +47,7 @@ define([
     this.control = d3.select(this.container).append('svg');
     this.container.style.width = this.width + "px";
     this.container.style.height = this.height + "px";
+
 
     return this;
   }
@@ -113,6 +118,8 @@ define([
     });
   }
 
+  Shoropleth.prototype.resolvePolygonCSS = function() {}
+
   Shoropleth.prototype.render = function(data) {
 
     var subunits = topojson.feature(data, data.objects.subunits);
@@ -121,17 +128,14 @@ define([
 
     var path = d3.geo.path().projection(projection);
 
-//    this.control.append("path")
-//      .datum(subunits)
-//      .attr("d", path);
 
+    var that = this;
     this.control.selectAll(".subunit")
       .data(subunits.features)
       .enter().append("path")
-//      .attr("class", function(d) {
-////        this.style.fill = 'red';
-//        return "subunit " + d.id;
-//      })
+      .attr("class", function(d) {
+        that.resolvePolygonCSS(this, d)
+      })
       .attr("d", path);
   }
 

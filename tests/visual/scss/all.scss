@@ -1,9 +1,23 @@
 
 @import "shoropleth.scss";
+@import "flexbox.scss";
 
+$debug: false;
 
-.map-container {
-  outline: 1px solid #000000;
-  overflow: visible;
-  display: inline-block;
+.maps {
+  @if ($debug) {
+    background: linen;
+  }
+  margin: 0 auto;
+  text-align: center;
+  @include fx-box();
+  @include fx-flow(column);
+  @include fx-justify-content(flex-end);
+  @include fx-align-items(center);
+}
+
+.map {
+  @if ($debug) {
+    background: paleturquoise;
+  }
 }
