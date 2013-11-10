@@ -38,6 +38,8 @@ define([
       this.setParallels(this.params.parallels);
     }
 
+    this.clear();
+
     this.control = d3.select(this.container).append('svg');
     this.container.style.width = this.width + "px";
     this.container.style.height = this.height + "px";
@@ -45,13 +47,11 @@ define([
     return this;
   }
 
-  Shoropleth.prototype.load = function(url) {
-    var that = this;
-    d3.json(url, function(error, data) {
-      that.render(data);
-    });
+  Shoropleth.prototype.clear = function() {
+    while(this.container.firstChild) {
+      this.container.removeChild(this.container.firstChild);
+    }
   }
-
 
   Shoropleth.prototype.getProjection = function() {
     var width = this.width;
@@ -105,7 +105,17 @@ define([
     return this.parallels;
   }
 
+
+  Shoropleth.prototype.load = function(url) {
+    var that = this;
+    d3.json(url, function(error, data) {
+      that.render(data);
+    });
+  }
+
   Shoropleth.prototype.render = function(data) {
+    console.log(data.objects.subunits);
+
     var subunits = topojson.feature(data, data.objects.subunits);
 
     var projection = this.getProjection();
