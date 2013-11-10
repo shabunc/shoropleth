@@ -63,6 +63,6 @@ define([
     sh.load(data_url);
   }
 
-  drawMap('data/rus.json', RUS);
+  drawMap('data/rus-fo.json', RUS);
   window.Shoropleth = Shoropleth;
 });
