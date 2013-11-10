@@ -128,12 +128,10 @@ define([
     this.control.selectAll(".subunit")
       .data(subunits.features)
       .enter().append("path")
-      .attr("class", function(d) {
-        this.style.fill = 'red';
-        console.log(this);
-        console.log(d);
-        return "subunit " + d.id;
-      })
+//      .attr("class", function(d) {
+////        this.style.fill = 'red';
+//        return "subunit " + d.id;
+//      })
       .attr("d", path);
   }
 
