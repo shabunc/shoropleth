@@ -8,12 +8,15 @@ define([
   var data = {shoropleth: true};
 
   var Shoropleth = function() {}
-  Shoropleth.prototype.init = function(params) {
+  Shoropleth.prototype.init = function(container_selector, params) {
     this.params = params;
     this.width = params.width;
     this.height = params.height;
+    this.container = document.querySelector(container_selector);
 
-    this.control = d3.select(document.createElement('span')).append('svg');
+    console.log(this.container);
+
+    this.control = d3.select(this.container).append('svg');
 
     return this;
 
@@ -35,8 +38,6 @@ define([
     this.control.append("path")
       .datum(topojson.feature(data, data.objects.subunits))
       .attr("d", d3.geo.path().projection(d3.geo.mercator()));
-
-    document.body.appendChild(this.getSVGControl());
   }
 
   Shoropleth.prototype.getSVGControl = function() {

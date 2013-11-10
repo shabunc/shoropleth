@@ -2,7 +2,7 @@ define([
   'shoropleth'
 ], function(Shoropleth) {
 
-  var sh = new Shoropleth().init({
+  var sh = new Shoropleth().init('#uk', {
     width: 960,
     height: 1160
   });
