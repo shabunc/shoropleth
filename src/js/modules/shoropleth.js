@@ -114,7 +114,6 @@ define([
   }
 
   Shoropleth.prototype.render = function(data) {
-    console.log(data.objects.subunits);
 
     var subunits = topojson.feature(data, data.objects.subunits);
 
@@ -122,8 +121,19 @@ define([
 
     var path = d3.geo.path().projection(projection);
 
-    this.control.append("path")
-      .datum(subunits)
+//    this.control.append("path")
+//      .datum(subunits)
+//      .attr("d", path);
+
+    this.control.selectAll(".subunit")
+      .data(subunits.features)
+      .enter().append("path")
+      .attr("class", function(d) {
+        this.style.fill = 'red';
+        console.log(this);
+        console.log(d);
+        return "subunit " + d.id;
+      })
       .attr("d", path);
   }
 

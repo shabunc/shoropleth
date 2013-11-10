@@ -4,7 +4,7 @@ define([
   'd3'
 ], function(Shoropleth) {
 
-  var RUSSIA = {
+  var RUS = {
     //озеров Виви - Координаты: Координаты: 66°47′20″ с. ш. 93°46′31″ в. д. (G) (O) (Я)
     //66°25′N 94°15′E
     width: 500,
@@ -42,6 +42,15 @@ define([
     scale: 100
   }
 
+  var UK = {
+    width: 500,
+    height: 500,
+    center: [0, 55.4],
+    rotate: [4.4, 0],
+    parallels: [50, 60],
+    scale: 1000
+  }
+
 
   var drawMap = function(data_url, params) {
     var sh = new Shoropleth().init('#map', params);
@@ -50,7 +59,7 @@ define([
   }
 
 
-  drawMap('data/rus.json', RUSSIA);
+  drawMap('data/rus.json', RUS);
 
   window.Shoropleth = Shoropleth;
 });
