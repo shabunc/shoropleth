@@ -1,8 +1,13 @@
 
 @import "shoropleth.scss";
 
+.maps {
+  margin: 0 auto;
+  text-align: center;
+}
 
 .map-container {
+  margin: 0 auto;
   outline: 1px solid #000000;
   overflow: visible;
   display: inline-block;

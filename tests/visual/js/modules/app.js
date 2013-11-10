@@ -57,12 +57,14 @@ define([
   }
 
 
-  var drawMap = function(data_url, params) {
-    var sh = new Shoropleth().init('#map', params);
+  var drawMap = function(container_selector, data_url, params) {
+    var sh = new Shoropleth().init(container_selector, params);
 
     sh.load(data_url);
   }
 
-  drawMap('data/rus-fo.json', RUS);
+  drawMap('#map-cis', 'data/cis.json', CIS);
+  drawMap('#map-fo', 'data/rus-fo.json', RUS);
+  drawMap('#map-rus', 'data/rus.json', RUS);
   window.Shoropleth = Shoropleth;
 });
