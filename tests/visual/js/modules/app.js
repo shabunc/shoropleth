@@ -63,6 +63,7 @@ define([
     sh.load(data_url);
   }
 
+
   drawMap('#map-cis', 'data/cis.json', CIS);
   drawMap('#map-fo', 'data/rus-fo.json', RUS);
   drawMap('#map-rus', 'data/rus.json', RUS);
