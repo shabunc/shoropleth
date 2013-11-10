@@ -63,7 +63,6 @@ define([
     sh.load(data_url);
   }
 
-
-  drawMap('data/cis.json', CIS);
+  drawMap('data/rus.json', RUS);
   window.Shoropleth = Shoropleth;
 });
